@@ -1,0 +1,225 @@
+<html>
+
+<head>
+    <!-- <script src="jquery-3.2.1.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>HwDemo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        .t1 {}
+
+        .fm {}
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">HwDemo</a>
+            </div>
+            <!-- <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#">Page 1</a></li>
+                <li><a href="#">Page 2</a></li>
+                <li><a href="#">Page 3</a></li>
+            </ul> -->
+        </div>
+    </nav>
+    <div class="fm" align="center" style="padding:5%">
+        <!-- <input type="text" id="userId">
+    <input type="button" value="search" id="b1"> -->
+        <div class="form-group">
+            <label for="sel1">Select UserID:</label>
+            <select class="form-control" id="sel1">
+                <option value="0">ALL</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="sel1">Select Title:</label>
+            <select class="form-control" id="sel2">
+            </select>
+            <br>
+            <!-- <button class="btn btn-default" id="find">GO</button> -->
+            <!-- <input type="button" value="search" id="find"> -->
+        </div>
+
+
+
+        <table class="table .table-striped" align="center">
+            <tr>
+                <th>userId</th>
+                <th>id</th>
+                <th>title</th>
+                <th>body</th>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        all();
+
+
+
+        // $.getJSON('https://tw.global.nba.com/stats2/player/stats.json?ds=career&locale=zh_TW&playerCode=lamarcus_aldridgecallback?', function(data) {
+        //     //data is the JSON string
+        //     console.log(data)
+        // });
+
+        // $("#b1").click(function () {
+        //     var uid = $("#userId").val();
+        //     console.log(uid);
+        //     var op = $("#sel1").val();
+        //     console.log(op);
+        //     $(".tr1").remove();
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: 'https://jsonplaceholder.typicode.com/posts', //https://tw.global.nba.com/stats2/player/stats.json'',
+        //         data: {
+        //             userId: uid
+        //         }, //{ds:'career', locale:'zh_TW', }, ds=career&locale=zh_TW&playerCode=stephen_curry// userId: '2'
+        //         jsonpCallback: 'MyJSONPCallback',
+        //         dataType: 'jsonp',
+        //         success: function (data) {
+        //             console.log(data.length);
+        //             if (data.length == 0) {
+        //                 //$('table').append($('<tr>').html("no result!!"));
+        //                 alert("no result!!");
+        //             }
+        //             $.each(data, function (index, element) {
+
+        //                 $('.table').append($('<tr class="tr1">').html("<td>" + element.userId +
+        //                     "</td><td>" + element.id + "</td><td>" + element.title +
+        //                     "</td><td>" + element.body + "</td>"));
+
+        //                 $('#sel2').append($('<option>').html(element.title));
+        //             });
+        //         }
+        //     });
+        // });
+
+        $("#sel1").change(function () {
+            var uid = $("#userId").val();
+            console.log(uid);
+            var op = $("#sel1").val();
+            console.log(op);
+            $(".tr1").remove();
+            $(".op1").remove();
+            if (op == 0) {
+                all();
+            } else {
+                $.ajax({
+                    type: 'GET',
+                    url: 'https://jsonplaceholder.typicode.com/posts', //https://tw.global.nba.com/stats2/player/stats.json'',
+                    data: {
+                        userId: op
+                    }, //{ds:'career', locale:'zh_TW', }, ds=career&locale=zh_TW&playerCode=stephen_curry// userId: '2'
+                    jsonpCallback: 'MyJSONPCallback',
+                    dataType: 'jsonp',
+                    success: function (data) {
+                        console.log(data.length);
+                        if (data.length == 0) {
+                            //$('table').append($('<tr>').html("no result!!"));
+                            alert("no result!!");
+                        }
+                        $.each(data, function (index, element) {
+
+                            $('.table').append($('<tr class="tr1">').html("<td>" + element.userId +
+                                "</td><td>" + element.id + "</td><td>" + element.title +
+                                "</td><td>" + element.body + "</td>"));
+
+                            $('#sel2').append($('<option class="op1" value="' + element.id +
+                                '">').html(element.id +
+                                element.title));
+                        });
+                    }
+                });
+            }
+
+        });
+
+        $("#sel2").change(function () {
+            var uid = $("#userId").val();
+            console.log(uid);
+            var op = $("#sel1").val();
+            console.log(op);
+            var op2 = $("#sel2").val();
+            console.log(op2);
+            $(".tr1").remove();
+            $(".op1").remove();
+            $.ajax({
+                type: 'GET',
+                url: 'https://jsonplaceholder.typicode.com/posts', //https://tw.global.nba.com/stats2/player/stats.json'',
+                data: {
+                    //userId: op,
+                    id: op2
+                }, //{ds:'career', locale:'zh_TW', }, ds=career&locale=zh_TW&playerCode=stephen_curry// userId: '2'
+                jsonpCallback: 'MyJSONPCallback',
+                dataType: 'jsonp',
+                success: function (data) {
+                    console.log(data.length);
+                    if (data.length == 0) {
+                        //$('table').append($('<tr>').html("no result!!"));
+                        alert("no result!!");
+                    }
+                    $.each(data, function (index, element) {
+
+                        $('.table').append($('<tr class="tr1">').html("<td>" + element.userId +
+                            "</td><td>" + element.id + "</td><td>" + element.title +
+                            "</td><td>" + element.body + "</td>"));
+
+                        // $('#sel2').append($('<option class="op1" value="">').html(element.id +
+                        //     element.title));
+                    });
+                }
+            });
+        });
+
+
+        function all() {
+            $.ajax({
+                type: 'GET',
+                url: 'https://jsonplaceholder.typicode.com/posts', //https://tw.global.nba.com/stats2/player/stats.json'',
+                data: {
+
+                }, //{ds:'career', locale:'zh_TW', }, ds=career&locale=zh_TW&playerCode=stephen_curry// userId: '2'
+                jsonpCallback: 'MyJSONPCallback',
+                dataType: 'jsonp',
+                success: function (data) {
+                    console.log(data.length);
+                    if (data.length == 0) {
+                        $('table').append($('<tr>').html("no result!!"));
+                    }
+                    $.each(data, function (index, element) {
+
+                        $('.table').append($('<tr class="tr1">').html("<td>" + element.userId +
+                            "</td><td>" + element.id + "</td><td>" + element.title +
+                            "</td><td>" + element.body + "</td>"));
+                        $('#sel2').append($('<option class="op1" value="' + element.id + '">').html(
+                            element.title));
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
